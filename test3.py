@@ -85,13 +85,19 @@ while flRunning:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             flRunning = False
-            pygame.quit()
+            
     # Update
     all_sprites.update()
     
+    hit = pygame.sprite.spritecollide(player, mobs, False)
+    if hit:
+        flRunning = False
+        
     # Draw / render
     screen.fill(BLACK)
     all_sprites.draw(screen)
     
     # draw -дан кейін
     pygame.display.update()
+
+pygame.quit()
