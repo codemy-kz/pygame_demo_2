@@ -18,18 +18,24 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("PyGame Template")
 clock = pygame.time.Clock()
 
+all_sprites = pygame.sprite.Group()
+
 # Game loop
 flRunning = True
 while flRunning:
+    clock.tick(FPS)
+    
     # Process inputs(events)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             flRunning = False
             pygame.quit()
     # Update
+    all_sprites.update()
 
     # Draw / render
     screen.fill(BLACK)
-
+    all_sprites.draw(screen)
+    
     # draw -дан кейін
     pygame.display.update()
