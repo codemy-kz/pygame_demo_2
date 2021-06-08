@@ -133,6 +133,18 @@ for i in range(8):
 
 bullets = pygame.sprite.Group()
 
+font_name = pygame.font.match_font("arial")
+def draw_text(surf, text, size, x, y):
+    font = pygame.font.Font(font_name, size)
+    text_surface = font.render(text, True, WHITE)
+    text_rect = text_surface.get_rect()
+    text_rect.mi    dtop = (x,  y)
+    surf.blit(text_surface, text_rect)
+
+
+score = 0
+
+
 # Game loop
 flRunning = True
 while flRunning:
@@ -150,7 +162,9 @@ while flRunning:
     all_sprites.update()
     
     hits = pygame.sprite.groupcollide(mobs, bullets, True, True)
+    # print(hits)
     for h in hits:
+        score += 50 - h.radius
         m = Mob()
         all_sprites.add(m)
         mobs.add(m)
@@ -162,6 +176,7 @@ while flRunning:
     # Draw / render
     screen.blit(background, background_pos)
     all_sprites.draw(screen)
+    draw_text(screen, str(score), 18, WIDTH / 2, 10)
     
     # draw -дан кейін
     pygame.display.update()
