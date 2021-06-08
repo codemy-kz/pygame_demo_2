@@ -24,6 +24,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.centerx = WIDTH // 2
         self.rect.bottom = HEIGHT - 10
         self.speedx = 0
+        self.radius = 20
 
     def update(self):
         self.speedx = 0
@@ -56,6 +57,7 @@ class Mob(pygame.sprite.Sprite):
         self.rect.y = random.randrange(-100, -40)
         self.speedy = random.randrange(1, 8)
         self.speedx = random.randrange(-3, 3)
+        self.radius = int(self.rect.width*0.85 / 2)
 
     def update(self):
         self.rect.y += self.speedy
@@ -130,7 +132,7 @@ while flRunning:
         all_sprites.add(m)
         mobs.add(m)
 
-    hit = pygame.sprite.spritecollide(player, mobs, False)
+    hit = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle)
     if hit:
         flRunning = False
         
