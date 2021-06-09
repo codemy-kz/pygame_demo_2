@@ -3,6 +3,7 @@ import random
 from os import path
 
 img_dir = path.join(path.dirname(__file__), "img")
+snd_dir = path.join(path.dirname(__file__), 'snd')
 
 WIDTH = 480
 HEIGHT = 600
@@ -45,6 +46,7 @@ class Player(pygame.sprite.Sprite):
         bullet = Bullet(self.rect.centerx, self.rect.top)
         all_sprites.add(bullet)
         bullets.add(bullet)
+        shoot_sound.play()
 
 
 class Mob(pygame.sprite.Sprite):
@@ -120,6 +122,14 @@ for img in meteor_list:
 bullet_img = pygame.image.load(path.join(img_dir, 'laserRed16.png')).convert()
 
 
+shoot_sound = pygame.mixer.Sound(path.join(snd_dir, 'pew.wav'))
+expl_sounds = []
+for snd in ['expl3.wav', 'expl6.wav']:
+    expl_sounds.append(pygame.mixer.Sound(path.join(snd_dir, snd)))
+pygame.mixer.music.load(path.join(snd_dir, 'tgfcoder-FrozenJam-SeamlessLoop.ogg'))
+# pygame.mixer.music.set_volume(0.6)
+pygame.mixer.music.play(loops = -1)
+
 
 all_sprites = pygame.sprite.Group()
 player = Player()
@@ -165,6 +175,7 @@ while flRunning:
     # print(hits)
     for h in hits:
         score += 50 - h.radius
+        random.choice(expl_sounds).play()
         m = Mob()
         all_sprites.add(m)
         mobs.add(m)
